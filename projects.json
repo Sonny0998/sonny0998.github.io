@@ -1,0 +1,265 @@
+{
+  "projects": [
+    {
+      "id": 1,
+      "title": "CleanSpace Pro",
+      "description": "Landing page for a residential cleaning service. Before/after slider, booking form, WhatsApp integration.",
+      "description_es": "Landing page para servicio de limpieza residencial. Slider antes/después, formulario de reserva, integración con WhatsApp.",
+      "category": [
+        "frontend",
+        "design"
+      ],
+      "tech": [
+        "HTML",
+        "CSS",
+        "JavaScript"
+      ],
+      "price": 39,
+      "type": "sale",
+      "preview_url": "https://sonny0998.github.io/cleanspace-pro",
+      "thumbnail_color": "#1E2322",
+      "accent_color": "#5C7A65",
+      "featured": true,
+      "published": false,
+      "date": "2026-06-01"
+    },
+    {
+      "id": 2,
+      "title": "SaaS Landing Page",
+      "description": "Animated landing page with hero, pricing, FAQ and CTA sections. Fully responsive.",
+      "description_es": "Landing page animada con hero, precios, FAQ y CTA. Totalmente responsive.",
+      "category": [
+        "frontend",
+        "template"
+      ],
+      "tech": [
+        "HTML",
+        "CSS",
+        "JavaScript"
+      ],
+      "price": 39,
+      "type": "sale",
+      "preview_url": "https://sonny0998.github.io/saas-landing",
+      "thumbnail_color": "#141420",
+      "accent_color": "#E8FF47",
+      "featured": false,
+      "published": false,
+      "date": "2026-05-10"
+    },
+    {
+      "id": 3,
+      "title": "Portfolio Template",
+      "description": "Minimal portfolio for designers and developers. Dark/light mode included.",
+      "description_es": "Portafolio minimalista para diseñadores y developers. Modo oscuro/claro incluido.",
+      "category": [
+        "frontend",
+        "template",
+        "design"
+      ],
+      "tech": [
+        "HTML",
+        "CSS",
+        "JS"
+      ],
+      "price": 25,
+      "type": "sale",
+      "preview_url": "https://sonny0998.github.io/portfolio-template",
+      "thumbnail_color": "#fafafa",
+      "accent_color": "#111111",
+      "featured": false,
+      "published": false,
+      "date": "2026-04-20"
+    },
+    {
+      "id": 4,
+      "title": "Full-stack Auth System",
+      "description": "Login/register system with JWT authentication, roles and protected routes.",
+      "description_es": "Sistema de login/registro con autenticación JWT, roles y rutas protegidas.",
+      "category": [
+        "fullstack"
+      ],
+      "tech": [
+        "Node.js",
+        "Express",
+        "JWT",
+        "MySQL"
+      ],
+      "price": 0,
+      "type": "custom",
+      "preview_url": "https://sonny0998.github.io/auth-system",
+      "thumbnail_color": "#0f0f23",
+      "accent_color": "#7c3aed",
+      "featured": false,
+      "published": false,
+      "date": "2026-03-15"
+    },
+    {
+      "id": 5,
+      "title": "Ember & Oak — Restaurant",
+      "description": "Complete restaurant site: tabbed menu, photo gallery, reservation form, hours & location.",
+      "description_es": "Sitio completo de restaurante: menú por pestañas, galería de fotos, formulario de reserva, horarios y ubicación.",
+      "category": [
+        "frontend",
+        "template",
+        "design"
+      ],
+      "tech": [
+        "HTML",
+        "CSS",
+        "JavaScript"
+      ],
+      "price": 59,
+      "type": "sale",
+      "preview_url": "https://sonny0998.github.io/ember-oak-complete",
+      "thumbnail_color": "#1B1712",
+      "accent_color": "#C9873C",
+      "featured": true,
+      "date": "2026-08-13",
+      "published": true
+    },
+    {
+      "id": 7,
+      "title": "Meridian Properties — Real Estate",
+      "description": "Complete real estate site: filterable property listings, agent contact, neighborhood section.",
+      "description_es": "Sitio completo de inmobiliaria: listados filtrables, contacto de agente, sección de vecindario.",
+      "category": [
+        "frontend",
+        "template",
+        "design"
+      ],
+      "tech": [
+        "HTML",
+        "CSS",
+        "JavaScript"
+      ],
+      "price": 59,
+      "type": "sale",
+      "preview_url": "https://sonny0998.github.io/meridian-complete",
+      "thumbnail_color": "#F6F4EF",
+      "accent_color": "#A9822F",
+      "featured": true,
+      "date": "2026-08-13",
+      "published": true
+    },
+    {
+      "id": 9,
+      "title": "Blume Studio — Salon & Spa",
+      "description": "Complete salon/spa site: service menu by category, gallery, testimonial, booking form.",
+      "description_es": "Sitio completo de salón/spa: menú de servicios por categoría, galería, testimonio, formulario de reserva.",
+      "category": [
+        "frontend",
+        "template",
+        "design"
+      ],
+      "tech": [
+        "HTML",
+        "CSS",
+        "JavaScript"
+      ],
+      "price": 59,
+      "type": "sale",
+      "preview_url": "https://sonny0998.github.io/blume-complete",
+      "thumbnail_color": "#FBF3F1",
+      "accent_color": "#B8788A",
+      "featured": true,
+      "date": "2026-08-13",
+      "published": true
+    },
+    {
+      "id": 11,
+      "title": "Forge Athletics — Gym",
+      "description": "Complete gym site: class programs, weekly schedule table, pricing tiers, free trial form.",
+      "description_es": "Sitio completo de gimnasio: programas de clases, tabla de horarios semanal, planes de precio, formulario de prueba gratis.",
+      "category": [
+        "frontend",
+        "template",
+        "design"
+      ],
+      "tech": [
+        "HTML",
+        "CSS",
+        "JavaScript"
+      ],
+      "price": 59,
+      "type": "sale",
+      "preview_url": "https://sonny0998.github.io/forge-complete",
+      "thumbnail_color": "#0D0D0D",
+      "accent_color": "#FF4D2E",
+      "featured": true,
+      "date": "2026-08-13",
+      "published": true
+    },
+    {
+      "id": 13,
+      "title": "Sterling & Voss — Law Firm",
+      "description": "Complete law firm site: practice areas, attorney profiles, case results, consultation request form.",
+      "description_es": "Sitio completo para bufete de abogados: áreas de práctica, perfiles de abogados, resultados de casos, formulario de consulta.",
+      "category": [
+        "frontend",
+        "template",
+        "design"
+      ],
+      "tech": [
+        "HTML",
+        "CSS",
+        "JavaScript"
+      ],
+      "price": 59,
+      "type": "sale",
+      "preview_url": "https://sonny0998.github.io/sterling-voss-complete",
+      "thumbnail_color": "#EDEDE7",
+      "accent_color": "#3B4F3D",
+      "featured": false,
+      "date": "2026-08-13",
+      "published": true
+    },
+    {
+      "id": 15,
+      "title": "Willow Dental — Clinic",
+      "description": "Complete dental clinic site: services, meet the team, insurance info, appointment booking form.",
+      "description_es": "Sitio completo para clínica dental: servicios, conoce al equipo, info de seguros, formulario de citas.",
+      "category": [
+        "frontend",
+        "template",
+        "design"
+      ],
+      "tech": [
+        "HTML",
+        "CSS",
+        "JavaScript"
+      ],
+      "price": 59,
+      "type": "sale",
+      "preview_url": "https://sonny0998.github.io/willow-dental-complete",
+      "thumbnail_color": "#F4F9F7",
+      "accent_color": "#2F8F7B",
+      "featured": false,
+      "date": "2026-08-13",
+      "published": true
+    },
+    {
+      "id": 17,
+      "title": "Ironclad Builders — Construction",
+      "description": "Complete construction company site: services, project gallery, process steps, quote request form.",
+      "description_es": "Sitio completo para constructora: servicios, galería de proyectos, pasos del proceso, formulario de cotización.",
+      "category": [
+        "frontend",
+        "template",
+        "design"
+      ],
+      "tech": [
+        "HTML",
+        "CSS",
+        "JavaScript"
+      ],
+      "price": 59,
+      "type": "sale",
+      "preview_url": "https://sonny0998.github.io/ironclad-complete",
+      "thumbnail_color": "#E7E4DD",
+      "accent_color": "#E8590C",
+      "featured": false,
+      "date": "2026-08-13",
+      "published": true
+    }
+  ]
+}

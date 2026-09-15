@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="robots" content="noindex, nofollow"/>
+  <title>SitesPro — Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root{--bg:#0A0A0A;--bg2:#111;--bg3:#1a1a1a;--fg:#F5F2ED;--fg2:#9A9590;--fg3:#5A5550;--accent:#E8FF47;--accent2:#FF6B35;--border:rgba(245,242,237,.08);--border2:rgba(245,242,237,.15);--r:8px;--t:.3s ease;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--fg);min-height:100vh;}
+
+    .login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:24px;}
+    .login-card{background:var(--bg2);border:1px solid var(--border2);border-radius:16px;padding:48px 40px;width:100%;max-width:400px;}
+    .login-logo{display:flex;align-items:center;gap:10px;font-size:1.3rem;font-weight:700;color:var(--fg);margin-bottom:8px;}
+    .login-logo span{color:var(--accent);}
+    .logo-mark{font-size:1rem;background:var(--accent);color:#0A0A0A;width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+    .login-subtitle{font-size:.85rem;color:var(--fg3);margin-bottom:32px;}
+    .login-card h2{font-size:1.3rem;font-weight:600;margin-bottom:24px;}
+    .field{display:flex;flex-direction:column;gap:6px;margin-bottom:18px;}
+    .field label{font-size:.78rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--fg3);}
+    .field input{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:12px 16px;font-family:'Outfit',sans-serif;font-size:.9rem;color:var(--fg);outline:none;transition:var(--t);}
+    .field input:focus{border-color:var(--accent);}
+    .btn-login{width:100%;background:var(--accent);color:#0A0A0A;border:none;border-radius:40px;padding:14px;font-family:'Outfit',sans-serif;font-weight:700;font-size:1rem;cursor:pointer;transition:var(--t);margin-top:8px;}
+    .btn-login:hover{opacity:.9;}
+    .login-error{display:none;background:rgba(255,107,53,.1);border:1px solid rgba(255,107,53,.3);color:var(--accent2);padding:10px 16px;border-radius:var(--r);font-size:.83rem;margin-top:12px;}
+    .login-hint{font-size:.75rem;color:var(--fg3);text-align:center;margin-top:16px;line-height:1.6;}
+
+    .admin-screen{display:none;}
+    .admin-screen.active{display:flex;min-height:100vh;}
+    .sidebar{width:220px;background:var(--bg2);border-right:1px solid var(--border);padding:24px 0;flex-shrink:0;display:flex;flex-direction:column;}
+    .sidebar-logo{display:flex;align-items:center;gap:8px;font-size:1.05rem;font-weight:700;color:var(--fg);padding:0 20px 24px;border-bottom:1px solid var(--border);}
+    .sidebar-logo span{color:var(--accent);}
+    .sidebar-nav{padding:16px 0;flex:1;}
+    .side-link{display:flex;align-items:center;gap:10px;padding:10px 20px;font-size:.875rem;font-weight:500;color:var(--fg2);cursor:pointer;transition:var(--t);border:none;background:none;width:100%;text-align:left;}
+    .side-link:hover,.side-link.active{background:rgba(232,255,71,.06);color:var(--accent);}
+    .sidebar-footer{padding:16px 20px;border-top:1px solid var(--border);}
+    .btn-logout{width:100%;background:transparent;border:1px solid var(--border);color:var(--fg3);border-radius:var(--r);padding:9px;font-family:'Outfit',sans-serif;font-size:.8rem;cursor:pointer;transition:var(--t);}
+    .btn-logout:hover{border-color:var(--accent2);color:var(--accent2);}
+
+    .main-content{flex:1;padding:32px;overflow-y:auto;}
+    .page-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:32px;flex-wrap:wrap;gap:12px;}
+    .page-header h1{font-size:1.5rem;font-weight:700;}
+    .page-header p{font-size:.85rem;color:var(--fg3);margin-top:4px;}
+
+    .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px;}
+    .stat-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:20px;}
+    .stat-card .s-val{font-size:2rem;font-weight:700;color:var(--accent);font-variant-numeric:tabular-nums;}
+    .stat-card .s-label{font-size:.78rem;color:var(--fg3);margin-top:4px;}
+
+    .panel{background:var(--bg2);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:24px;}
+    .panel-header{display:flex;justify-content:space-between;align-items:center;padding:20px 24px;border-bottom:1px solid var(--border);}
+    .panel-header h2{font-size:1rem;font-weight:600;}
+    .btn-add{background:var(--accent);color:#0A0A0A;border:none;border-radius:40px;padding:9px 20px;font-family:'Outfit',sans-serif;font-weight:700;font-size:.83rem;cursor:pointer;transition:var(--t);}
+    .btn-add:hover{opacity:.9;}
+    table{width:100%;border-collapse:collapse;}
+    th{font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--fg3);padding:12px 16px;text-align:left;border-bottom:1px solid var(--border);}
+    td{padding:14px 16px;font-size:.875rem;color:var(--fg2);border-bottom:1px solid var(--border);}
+    tr:last-child td{border-bottom:none;}
+    tr:hover td{background:rgba(255,255,255,.02);}
+    .td-title{color:var(--fg);font-weight:500;}
+    .td-price{color:var(--accent);font-weight:600;}
+    .badge{display:inline-block;font-size:.68rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:3px 10px;border-radius:40px;}
+    .badge-sale{background:rgba(232,255,71,.12);color:var(--accent);}
+    .badge-custom{background:rgba(255,107,53,.12);color:var(--accent2);}
+    .td-actions{display:flex;gap:8px;flex-wrap:wrap;}
+    .btn-edit,.btn-del,.btn-preview-sm{border:none;border-radius:6px;padding:6px 12px;font-family:'Outfit',sans-serif;font-size:.75rem;font-weight:600;cursor:pointer;transition:var(--t);}
+    .btn-edit{background:rgba(245,242,237,.08);color:var(--fg2);}
+    .btn-edit:hover{background:rgba(245,242,237,.15);color:var(--fg);}
+    .btn-del{background:rgba(255,107,53,.1);color:var(--accent2);}
+    .btn-del:hover{background:rgba(255,107,53,.2);}
+    .btn-preview-sm{background:rgba(232,255,71,.1);color:var(--accent);}
+    .btn-preview-sm:hover{background:rgba(232,255,71,.2);}
+
+    .form-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(8px);z-index:200;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:var(--t);}
+    .form-overlay.open{opacity:1;pointer-events:all;}
+    .form-modal{background:var(--bg2);border:1px solid var(--border2);border-radius:16px;padding:36px;width:100%;max-width:640px;max-height:90vh;overflow-y:auto;position:relative;transform:translateY(20px);transition:transform var(--t);}
+    .form-overlay.open .form-modal{transform:translateY(0);}
+    .form-modal h2{font-size:1.2rem;font-weight:700;margin-bottom:24px;}
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+    .form-grid .full{grid-column:1/-1;}
+    .fm-group{display:flex;flex-direction:column;gap:5px;}
+    .fm-group label{font-size:.75rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--fg3);}
+    .fm-group input,.fm-group select,.fm-group textarea{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:11px 14px;font-family:'Outfit',sans-serif;font-size:.875rem;color:var(--fg);outline:none;transition:var(--t);}
+    .fm-group input:focus,.fm-group select:focus,.fm-group textarea:focus{border-color:var(--accent);}
+    .fm-group select option{background:var(--bg3);}
+    .color-row{display:flex;align-items:center;gap:10px;}
+    .color-row input[type=color]{width:40px;height:40px;border:none;background:none;cursor:pointer;border-radius:8px;}
+    .color-row input[type=text]{flex:1;}
+    .form-actions{display:flex;gap:12px;justify-content:flex-end;margin-top:24px;}
+    .btn-cancel{background:transparent;border:1px solid var(--border);color:var(--fg2);border-radius:40px;padding:10px 24px;font-family:'Outfit',sans-serif;font-weight:600;font-size:.875rem;cursor:pointer;transition:var(--t);}
+    .btn-cancel:hover{border-color:var(--fg);color:var(--fg);}
+    .btn-save{background:var(--accent);color:#0A0A0A;border:none;border-radius:40px;padding:10px 28px;font-family:'Outfit',sans-serif;font-weight:700;font-size:.875rem;cursor:pointer;transition:var(--t);}
+    .btn-save:hover{opacity:.9;}
+    .form-close{position:absolute;top:16px;right:16px;background:none;border:none;color:var(--fg3);font-size:1.2rem;cursor:pointer;}
+
+    .json-panel{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:24px;}
+    .json-panel h3{font-size:.875rem;font-weight:600;margin-bottom:12px;}
+    .json-panel pre{font-size:.75rem;color:var(--fg2);overflow-x:auto;white-space:pre-wrap;word-break:break-all;line-height:1.6;max-height:400px;overflow-y:auto;}
+    .btn-copy{background:rgba(232,255,71,.1);border:none;color:var(--accent);border-radius:6px;padding:6px 14px;font-family:'Outfit',sans-serif;font-size:.75rem;font-weight:600;cursor:pointer;margin-top:12px;transition:var(--t);}
+    .btn-copy:hover{background:rgba(232,255,71,.2);}
+    .copy-ok{color:#28CA41;font-size:.75rem;margin-left:8px;opacity:0;transition:var(--t);}
+    .copy-ok.show{opacity:1;}
+
+    @media(max-width:768px){
+      .sidebar{display:none;}
+      .stats-row{grid-template-columns:1fr 1fr;}
+      .form-grid{grid-template-columns:1fr;}
+      table{font-size:.78rem;}
+      .main-content{padding:20px 16px;}
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══ LOGIN ═══ -->
+<div class="login-screen" id="loginScreen">
+  <div class="login-card">
+    <div class="login-logo"><span class="logo-mark">{S}</span> Sites<span>Pro</span></div>
+    <p class="login-subtitle">Portfolio Admin Panel</p>
+    <h2>Sign in</h2>
+    <div class="field"><label>Username</label><input type="text" id="loginUser" placeholder="admin" autocomplete="username"/></div>
+    <div class="field"><label>Password</label><input type="password" id="loginPass" placeholder="••••••••" autocomplete="current-password"/></div>
+    <button class="btn-login" id="loginBtn">Sign in →</button>
+    <div class="login-error" id="loginError">Invalid credentials. Try again.</div>
+    <p class="login-hint">⚠️ This login only hides the panel visually — it is NOT real security (anyone who reads the page source can see the password). Never use a password you reuse elsewhere. See the note at the bottom of setup.md for a real-security option.</p>
+  </div>
+</div>
+
+<!-- ═══ ADMIN ═══ -->
+<div class="admin-screen" id="adminScreen">
+  <aside class="sidebar">
+    <div class="sidebar-logo"><span class="logo-mark">{S}</span> Sites<span>Pro</span></div>
+    <nav class="sidebar-nav">
+      <button class="side-link active" data-tab="dashboard">📊 Dashboard</button>
+      <button class="side-link" data-tab="projects">📁 Projects</button>
+      <button class="side-link" data-tab="json">⚙️ Export JSON</button>
+      <button class="side-link" onclick="window.open('../index.html','_blank')">🌐 View site</button>
+    </nav>
+    <div class="sidebar-footer">
+      <button class="btn-logout" id="logoutBtn">Sign out</button>
+    </div>
+  </aside>
+
+  <main class="main-content">
+
+    <div id="tab-dashboard" class="tab-content">
+      <div class="page-header"><div><h1>Dashboard</h1><p>Overview of your portfolio</p></div></div>
+      <div class="stats-row">
+        <div class="stat-card"><div class="s-val" id="st-total">0</div><div class="s-label">Total projects</div></div>
+        <div class="stat-card"><div class="s-val" id="st-sale">0</div><div class="s-label">For sale</div></div>
+        <div class="stat-card"><div class="s-val" id="st-custom">0</div><div class="s-label">Custom only</div></div>
+        <div class="stat-card"><div class="s-val" id="st-revenue">$0</div><div class="s-label">Potential revenue (CAD)</div></div>
+      </div>
+      <div class="panel">
+        <div class="panel-header"><h2>Recent projects</h2></div>
+        <table><thead><tr><th>Title</th><th>Category</th><th>Price</th><th>Type</th></tr></thead>
+        <tbody id="dashTable"></tbody></table>
+      </div>
+    </div>
+
+    <div id="tab-projects" class="tab-content" style="display:none">
+      <div class="page-header">
+        <div><h1>Projects</h1><p>Manage your portfolio items</p></div>
+        <button class="btn-add" id="btnAddProject">+ Add project</button>
+      </div>
+      <div class="panel">
+        <table><thead><tr><th>Title</th><th>Categories</th><th>Tech</th><th>Price</th><th>Type</th><th>Actions</th></tr></thead>
+        <tbody id="projectsTable"></tbody></table>
+      </div>
+    </div>
+
+    <div id="tab-json" class="tab-content" style="display:none">
+      <div class="page-header"><div><h1>Export JSON</h1><p>Copy and replace your projects.json file</p></div></div>
+      <div class="json-panel">
+        <h3>projects.json — current data</h3>
+        <pre id="jsonOutput"></pre>
+        <button class="btn-copy" id="btnCopy">Copy to clipboard</button>
+        <span class="copy-ok" id="copyOk">✓ Copied!</span>
+        <p style="font-size:.78rem;color:var(--fg3);margin-top:12px;">Paste this into <code>projects.json</code> (in your SitesPro root folder) and save, to update the live site for every visitor — not just you.</p>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- ═══ FORM MODAL ═══ -->
+<div class="form-overlay" id="formOverlay">
+  <div class="form-modal">
+    <button class="form-close" id="formClose">✕</button>
+    <h2 id="formTitle">Add project</h2>
+    <div class="form-grid">
+      <div class="fm-group full"><label>Title *</label><input type="text" id="fTitle" placeholder="My Awesome Project"/></div>
+      <div class="fm-group full"><label>Description (English) *</label><textarea id="fDesc" rows="2" placeholder="Short description of the project..."></textarea></div>
+      <div class="fm-group full"><label>Description (Spanish)</label><textarea id="fDescEs" rows="2" placeholder="Descripción corta del proyecto..."></textarea></div>
+      <div class="fm-group full"><label>Live preview URL *</label><input type="url" id="fUrl" placeholder="https://sonny0998.github.io/mi-proyecto"/></div>
+      <div class="fm-group"><label>Categories (comma separated)</label><input type="text" id="fCats" placeholder="frontend, template, design"/></div>
+      <div class="fm-group"><label>Technologies (comma separated)</label><input type="text" id="fTech" placeholder="HTML, CSS, JavaScript"/></div>
+      <div class="fm-group"><label>Price (CAD, 0 = custom/free)</label><input type="number" id="fPrice" placeholder="39" min="0"/></div>
+      <div class="fm-group">
+        <label>Type</label>
+        <select id="fType"><option value="sale">For sale</option><option value="custom">Custom only</option><option value="free">Free</option></select>
+      </div>
+      <div class="fm-group">
+        <label>Background color</label>
+        <div class="color-row"><input type="color" id="fColorPicker" value="#1a1a2e"/><input type="text" id="fColor" value="#1a1a2e"/></div>
+      </div>
+      <div class="fm-group">
+        <label>Accent color</label>
+        <div class="color-row"><input type="color" id="fAccentPicker" value="#E8FF47"/><input type="text" id="fAccent" value="#E8FF47"/></div>
+      </div>
+      <div class="fm-group">
+        <label>Featured?</label>
+        <select id="fFeatured"><option value="false">No</option><option value="true">Yes</option></select>
+      </div>
+    </div>
+    <div class="form-actions">
+      <button class="btn-cancel" id="btnCancelForm">Cancel</button>
+      <button class="btn-save" id="btnSaveProject">Save project</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  // ── Change these before publishing your site ──
+  const ADMIN_USER = 'admin';
+  const ADMIN_PASS = 'sitespro2026';
+
+  let projects = [];
+  let editingId = null;
+
+  const saved = localStorage.getItem('sp_projects');
+  if(saved){ try{ projects = JSON.parse(saved); }catch{} }
+
+  document.getElementById('loginBtn').addEventListener('click', login);
+  document.getElementById('loginPass').addEventListener('keydown', e=>{ if(e.key==='Enter') login(); });
+  function login(){
+    const u=document.getElementById('loginUser').value.trim();
+    const p=document.getElementById('loginPass').value;
+    if(u===ADMIN_USER && p===ADMIN_PASS){
+      document.getElementById('loginScreen').style.display='none';
+      document.getElementById('adminScreen').classList.add('active');
+      if(projects.length===0) loadDefaultProjects();
+      renderAll();
+    } else {
+      document.getElementById('loginError').style.display='block';
+    }
+  }
+  document.getElementById('logoutBtn').addEventListener('click',()=>location.reload());
+
+  async function loadDefaultProjects(){
+    try{
+      const res = await fetch('../projects.json');
+      const data = await res.json();
+      projects = data.projects || [];
+      renderAll();
+    }catch{}
+  }
+
+  document.querySelectorAll('.side-link[data-tab]').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      document.querySelectorAll('.side-link').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.tab-content').forEach(t=>t.style.display='none');
+      document.getElementById('tab-'+btn.dataset.tab).style.display='block';
+      if(btn.dataset.tab==='json') renderJson();
+    });
+  });
+
+  function renderAll(){ renderDash(); renderTable(); }
+
+  function renderDash(){
+    const sale = projects.filter(p=>p.type==='sale');
+    const custom = projects.filter(p=>p.type==='custom');
+    const revenue = sale.reduce((a,p)=>a+(p.price||0),0);
+    document.getElementById('st-total').textContent = projects.length;
+    document.getElementById('st-sale').textContent = sale.length;
+    document.getElementById('st-custom').textContent = custom.length;
+    document.getElementById('st-revenue').textContent = '$'+revenue;
+    const recent = [...projects].sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,5);
+    document.getElementById('dashTable').innerHTML = recent.map(p=>`
+      <tr>
+        <td class="td-title">${p.title}</td>
+        <td>${(p.category||[]).join(', ')}</td>
+        <td class="td-price">${p.price>0?'$'+p.price:'Custom'}</td>
+        <td><span class="badge badge-${p.type==='sale'?'sale':'custom'}">${p.type}</span></td>
+      </tr>`).join('');
+  }
+
+  function renderTable(){
+    document.getElementById('projectsTable').innerHTML = projects.map(p=>`
+      <tr>
+        <td class="td-title">${p.title}${p.featured?' ⭐':''}</td>
+        <td>${(p.category||[]).join(', ')}</td>
+        <td>${(p.tech||[]).join(', ')}</td>
+        <td class="td-price">${p.price>0?'$'+p.price:p.type==='free'?'Free':'Custom'}</td>
+        <td><span class="badge badge-${p.type==='sale'?'sale':'custom'}">${p.type}</span></td>
+        <td class="td-actions">
+          <button class="btn-preview-sm" onclick="window.open('${p.preview_url}','_blank')">Preview</button>
+          <button class="btn-edit" data-id="${p.id}">Edit</button>
+          <button class="btn-del" data-id="${p.id}">Delete</button>
+        </td>
+      </tr>`).join('');
+    document.querySelectorAll('.btn-edit').forEach(b=>b.addEventListener('click',()=>openForm(parseInt(b.dataset.id))));
+    document.querySelectorAll('.btn-del').forEach(b=>b.addEventListener('click',()=>deleteProject(parseInt(b.dataset.id))));
+  }
+
+  function renderJson(){
+    document.getElementById('jsonOutput').textContent = JSON.stringify({projects},null,2);
+  }
+
+  document.getElementById('btnAddProject').addEventListener('click',()=>openForm(null));
+  document.getElementById('formClose').addEventListener('click',closeForm);
+  document.getElementById('btnCancelForm').addEventListener('click',closeForm);
+  document.getElementById('btnSaveProject').addEventListener('click',saveProject);
+
+  document.getElementById('fColorPicker').addEventListener('input',e=>{document.getElementById('fColor').value=e.target.value;});
+  document.getElementById('fColor').addEventListener('input',e=>{document.getElementById('fColorPicker').value=e.target.value;});
+  document.getElementById('fAccentPicker').addEventListener('input',e=>{document.getElementById('fAccent').value=e.target.value;});
+  document.getElementById('fAccent').addEventListener('input',e=>{document.getElementById('fAccentPicker').value=e.target.value;});
+
+  function openForm(id){
+    editingId = id;
+    const overlay = document.getElementById('formOverlay');
+    if(id===null){
+      document.getElementById('formTitle').textContent='Add project';
+      ['fTitle','fDesc','fDescEs','fUrl','fCats','fTech','fPrice'].forEach(id=>document.getElementById(id).value='');
+      document.getElementById('fType').value='sale';
+      document.getElementById('fColor').value='#1a1a2e'; document.getElementById('fColorPicker').value='#1a1a2e';
+      document.getElementById('fAccent').value='#E8FF47'; document.getElementById('fAccentPicker').value='#E8FF47';
+      document.getElementById('fFeatured').value='false';
+    } else {
+      const p = projects.find(x=>x.id===id);
+      document.getElementById('formTitle').textContent='Edit project';
+      document.getElementById('fTitle').value=p.title||'';
+      document.getElementById('fDesc').value=p.description||'';
+      document.getElementById('fDescEs').value=p.description_es||'';
+      document.getElementById('fUrl').value=p.preview_url||'';
+      document.getElementById('fCats').value=(p.category||[]).join(', ');
+      document.getElementById('fTech').value=(p.tech||[]).join(', ');
+      document.getElementById('fPrice').value=p.price||0;
+      document.getElementById('fType').value=p.type||'sale';
+      document.getElementById('fColor').value=p.thumbnail_color||'#1a1a2e';
+      document.getElementById('fColorPicker').value=p.thumbnail_color||'#1a1a2e';
+      document.getElementById('fAccent').value=p.accent_color||'#E8FF47';
+      document.getElementById('fAccentPicker').value=p.accent_color||'#E8FF47';
+      document.getElementById('fFeatured').value=String(p.featured||false);
+    }
+    overlay.classList.add('open');
+  }
+
+  function closeForm(){document.getElementById('formOverlay').classList.remove('open');}
+
+  function saveProject(){
+    const title=document.getElementById('fTitle').value.trim();
+    const url=document.getElementById('fUrl').value.trim();
+    if(!title||!url){alert('Title and preview URL are required.');return;}
+    const proj = {
+      id: editingId||Date.now(),
+      title,
+      description:document.getElementById('fDesc').value.trim(),
+      description_es:document.getElementById('fDescEs').value.trim(),
+      preview_url:url,
+      category:document.getElementById('fCats').value.split(',').map(s=>s.trim()).filter(Boolean),
+      tech:document.getElementById('fTech').value.split(',').map(s=>s.trim()).filter(Boolean),
+      price:parseFloat(document.getElementById('fPrice').value)||0,
+      type:document.getElementById('fType').value,
+      thumbnail_color:document.getElementById('fColor').value,
+      accent_color:document.getElementById('fAccent').value,
+      featured:document.getElementById('fFeatured').value==='true',
+      date:new Date().toISOString().split('T')[0]
+    };
+    if(editingId===null){ projects.push(proj); }
+    else { const i=projects.findIndex(p=>p.id===editingId); if(i>-1)projects[i]=proj; }
+    saveToStorage();
+    renderAll();
+    closeForm();
+  }
+
+  function deleteProject(id){
+    if(!confirm('Delete this project?'))return;
+    projects=projects.filter(p=>p.id!==id);
+    saveToStorage();
+    renderAll();
+  }
+
+  function saveToStorage(){localStorage.setItem('sp_projects',JSON.stringify(projects));}
+
+  document.getElementById('btnCopy').addEventListener('click',()=>{
+    navigator.clipboard.writeText(JSON.stringify({projects},null,2)).then(()=>{
+      const ok=document.getElementById('copyOk');
+      ok.classList.add('show');
+      setTimeout(()=>ok.classList.remove('show'),2000);
+    });
+  });
+})();
+</script>
+</body>
+</html>
